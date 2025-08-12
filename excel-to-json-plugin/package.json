@@ -1,0 +1,83 @@
+{
+  "name": "excel-to-json",
+  "package_version": 2,
+  "version": "1.0.0",
+  "description": "将Excel文件转换为JSON和TypeScript类型定义的Cocos Creator插件",
+  "main": "./dist/main.cjs",
+  "editor": ">=3.8.0",
+  "panels": {
+    "excel-panel": {
+      "title": "Excel 转换工具",
+      "type": "dockable",
+      "main": "./dist/panels/excel-panel.cjs",
+      "icon": "",
+      "size": {
+        "width": 1000,
+        "height": 800,
+        "min-width": 800,
+        "min-height": 600
+      }
+    }
+  },
+  "contributions": {
+    "menu": [
+      {
+        "path": "扩展/Excel转换工具",
+        "label": "打开转换面板",
+        "message": "open-panel"
+      }
+    ],
+    "shortcuts": [
+      {
+        "message": "open-panel",
+        "mac": "cmd+e",
+        "win": "ctrl+e"
+      }
+    ],
+    "messages": {
+      "open-panel": {
+        "title": "打开转换面板",
+        "methods": [
+          "open-panel"
+        ]
+      },
+      "set-output-path": {
+        "title": "设置输出路径",
+        "methods": [
+          "set-output-path"
+        ]
+      },
+      "convert-files": {
+        "title": "转换文件",
+        "methods": [
+          "convert-files"
+        ]
+      },
+      "open-output-folder": {
+        "title": "打开输出文件夹",
+        "methods": [
+          "open-output-folder"
+        ]
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -b && npm run rename-files && npm run copy-types",
+    "watch": "tsc -w",
+    "rename-files": "powershell -Command \"Get-ChildItem -Path dist -Recurse -Filter *.js | ForEach-Object { Rename-Item -Path $_.FullName -NewName ($_.BaseName + '.cjs') }\"",
+    "copy-types": "powershell -Command \"Copy-Item -Path src/types/* -Destination dist/types -Recurse -Force\""
+  },
+  "keywords": [
+    "excel",
+    "json",
+    "typescript",
+    "cocos-creator"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^24.2.1",
+    "typescript": "^5.9.2",
+    "xlsx": "^0.18.5"
+  }
+}
